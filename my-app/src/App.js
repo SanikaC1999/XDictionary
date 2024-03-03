@@ -12,8 +12,10 @@ export default function App() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [meaning, setMeaning] = useState("");
+  
+  const handleSearch = (e) => {
+    e.preventDefault(); // Prevent form submission
 
-  const handleSearch = () => {
     const result = dictionary.find(
       (item) => item.word.toLowerCase() === searchTerm.toLowerCase()
     );
@@ -27,16 +29,17 @@ export default function App() {
   return (
     <div className="App">
       <h1>Dictionary App</h1>
-      <input
-        type="text"
-        placeholder="Search a word"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button type="button" onClick={handleSearch}>
-        Search
-      </button>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search a word"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
       <h6>Definition: {meaning}</h6>
     </div>
   );
 }
+
