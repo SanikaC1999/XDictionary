@@ -15,16 +15,29 @@ export default function App() {
   
   const handleSearch = (e) => {
     e.preventDefault(); // Prevent form submission
-
-    const result = dictionary.find(
-      (item) => item.word.toLowerCase() === searchTerm.toLowerCase()
-    );
+  
+    let result = null;
+    const iterator = dictionary[Symbol.iterator](); // Get iterator for the array
+  
+    let currentItem = iterator.next(); // Get the first item from the iterator
+  
+    while (!currentItem.done) {
+      // Iterate until end of array
+      const item = currentItem.value;
+      if (item.word.toLowerCase() === searchTerm.toLowerCase()) {
+        result = item.meaning;
+        break; // Break the loop once the item is found
+      }
+      currentItem = iterator.next(); // Move to the next item
+    }
+  
     if (result) {
-      setMeaning(result.meaning);
+      setMeaning(result);
     } else {
       setMeaning("Word not found in the dictionary.");
     }
   };
+  
 
   return (
     <div className="App">
